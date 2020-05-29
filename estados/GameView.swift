@@ -100,8 +100,8 @@ struct Badge: View {
             .aspectRatio(1, contentMode: .fit)
         }
     }
-    static let gradientStart = Color(.cyan)
-    static let gradientEnd = Color(.blue)
+    static let gradientStart = Color(.systemPink)
+    static let gradientEnd = Color(.systemRed)
 }
 
 
@@ -133,43 +133,13 @@ struct Shake: GeometryEffect {
 
  
 struct GameView: View {
-     @State private var WrongAnimationAmount = 0.0
-     @State private var GoodAnimationAmount = 0.0
-     @State private var TheOthersAnimationAmount = 1.0
     
-     @State private var paises = ["Campeche",
-     "Chiapas",
-     "Chihuahua",
-     "Ciudad de México",
-     "Coahuila",
-     "Colima",
-     "Durango",
-     "Guanajuato",
-     "Guerrero",
-     "Hidalgo",
-     "Jalisco",
-     "México",
-     "Michoacán",
-     "Morelos",
-     "Nayarit",
-     "Nuevo León",
-     "Oaxaca",
-     "Puebla",
-     "Querétaro",
-     "Quintana Roo",
-     "San Luis Potosí",
-     "Sinaloa",
-     "Sonora",
-     "Tabasco",
-     "Tamaulipas",
-     "Tlaxcala",
-     "Veracruz",
-     "Yucatán",
-     "Zacatecas",
-     "Aguascalientes",
-     "Baja California",
-     "Baja California Sur"].shuffled()
+    @Environment(\.presentationMode) var presentationMode
     
+    @State private var WrongAnimationAmount = 0.0
+    @State private var GoodAnimationAmount = 0.0
+    @State private var TheOthersAnimationAmount = 1.0
+    @State public var items : [ItemCard]
     @State private var respuestaCorrecta = Int.random(in: 0...2)
     @State private var mostrarPuntuajeMasAlto = false
     @State private var tituloPuntaje = ""
@@ -177,39 +147,47 @@ struct GameView: View {
     @State private var puntaje = 0
     @State private var points = 3
     @State private var MaxPoints = 3
-    @State private var puntajeLimite = 30
+    @State public  var intentosMaximos : Int
+    @State private var intentos = 0
     @State private var mostrarPuntos = false
     var body: some View {
         GeometryReader{ geometry in
             ZStack{
                 Color.black
                 .edgesIgnoringSafeArea(.all)
-                LinearGradient(gradient: Gradient(colors: [.blue, .black]), startPoint: .top, endPoint: .bottom).edgesIgnoringSafeArea(.all).blur(radius: 5)
+                BackGround(width: 400)
+                .blur(radius: 5)
+                .accessibility(label: self.mostrarPuntos ? Text("Respuesta correcta obtuviste \(self.points == 1 ? "un punto" : "\(self.points) puntos") ") : Text("Elije la bandera de \(self.items[self.respuestaCorrecta].nombreCompleto)"))
                 
                 VStack(spacing: 30){
                     
                     VStack {
+                        
                         Text("Elige la bandera de")
                             .foregroundColor(.white)
                             .font(.largeTitle)
-                        Text(self.paises[self.respuestaCorrecta])
+                        Text(self.items[self.respuestaCorrecta].nombreCompleto)
                             .foregroundColor(.white)
-                            .font(.largeTitle)
+                            .font(.title)
                             .fontWeight(.black)
                     }
+                    .accessibilityElement(children: .ignore)
+                    .accessibility(value: Text("Elige la bandera de \(self.items[self.respuestaCorrecta].name)"))
+                    
                     ForEach(0..<3){ number in
                         Button(action:{
                             self.BanderaSeleccionada(number)
                         }){
-                            Bandera(imagen: self.paises[number])
+                            Bandera(imagen: self.items[number].name)
                         }
                         .modifier(Shake(animatableData: CGFloat(self.WrongAnimationAmount)))
                         .buttonStyle(PlainButtonStyle())
                         .rotation3DEffect( .degrees(self.GoodAnimationAmount), axis: (x: 0, y: 1, z: 0))
+                        .accessibility(label: Text(self.items[number].description))
                     }
                      
                                VStack {
-                                       Text("Tu Puntaje es ")
+                                       Text("Tu Puntaje total es ")
                                            .foregroundColor(.white)
                                            .font(.largeTitle)
                                 Text("\(self.puntaje) puntos")
@@ -217,32 +195,42 @@ struct GameView: View {
                                            .font(.largeTitle)
                                            .fontWeight(.black)
                                }
-                                       
-                                }
+                .accessibilityElement(children: .ignore)
+                .accessibility(label: Text("Tu Puntaje total es \(self.puntaje == 1 ? "un punto" : "\(self.puntaje) puntos") "))
+                    
+                }
+                .blur(radius: self.mostrarPuntos ? 10: 0)
+                .disabled(self.mostrarPuntos)
                 if self.mostrarPuntos {
-                
                     ZStack{
-                                Badge()
-                                VStack{
-                                    Text("Respuesta")
-                                    .font(.largeTitle)
-                                    HStack{
-                                        ForEach(0..<self.points) { point in
-                                            Image(systemName: "star.fill")
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                        }
-                                        ForEach(0..<(self.MaxPoints - self.points)) { point in
-                                            Image(systemName: "star")
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                        }
-                                      
-                                    }
-                                    .frame(width: min(geometry.size.width, geometry.size.height) * 0.8)
-                                     Text("Correcta")
-                                        .font(.largeTitle)
-                                        .bold()
+                        Badge()
+                            .frame(width: 400, height: 400)
+                        VStack{
+                                    Group{
+                                        Text("Respuesta")
+                                                                           .font(.largeTitle)
+                                                                           HStack{
+                                                                               ForEach(0..<self.points) { point in
+                                                                                   Image(systemName: "star.fill")
+                                                                                   .resizable()
+                                                                                   .aspectRatio(contentMode: .fit)
+                                                                               }
+                                                                               ForEach(0..<(self.MaxPoints - self.points)) { point in
+                                                                                   Image(systemName: "star")
+                                                                                   .resizable()
+                                                                                   .aspectRatio(contentMode: .fit)
+                                                                                       .accessibility(removeTraits: .isImage )
+                                                                               }.accessibility(label: Text("\(self.points == 1 ? "Una Estrella" : "\(self.points) estrellas")"))
+                                                                               
+                                                                             
+                                                                           }
+                                                                           .frame(width: min(geometry.size.width, geometry.size.height) * 0.8)
+                                                                            Text("Correcta")
+                                                                               .font(.largeTitle)
+                                                                               .bold()
+                                    }.accessibility(label: Text("Respuesta correcta obtuviste \(self.points == 1 ? "un punto" : "\(self.points) puntos") "))
+                                   
+                                    
                                     Button(action: {
                                         self.hacerPregunta()
                                         self.mostrarPuntos.toggle()
@@ -251,25 +239,41 @@ struct GameView: View {
                                             Text("Siguiente")
                                             Image(systemName: "play.circle.fill")
                                         }
-                                        .foregroundColor(.blue)
+                                        .foregroundColor(.pink)
                                         .padding()
                                         .background(Color.white)
                                         .clipShape(RoundedRectangle(cornerRadius: 20))
                                     }
+                                    .accessibility(label: Text("Continuar Juego"))
                                 }
-                                .foregroundColor(.white)
-                               
-                            }
-                            .shadow(color: .black, radius: 1)
+                        .foregroundColor(.white)
+                       
+                    }
+                    .shadow(color: .black, radius: 1)
                     
                 }
-               
+                
+                VStack{
+                    HStack{
+                        Button(action : {
+                            self.presentationMode.wrappedValue.dismiss()
+                        }){
+                            ButtonCancel()
+                        }.accessibility(label: Text("Salir del juego"))
+                        Spacer()
+                    }
+                    Spacer()
+                }
+                .padding()
+                .layoutPriority(1)
             }
+            
         }
         .alert(isPresented: $mostrarPuntuajeMasAlto){
-                   Alert(title: Text(tituloPuntaje), message: Text("\(textoPuntaje) tu puntaje es \(self.puntaje)"), dismissButton:.default(Text("Continuar")){
-                       
-                            self.hacerPregunta()
+                   Alert(title: Text(tituloPuntaje), message: Text("\(textoPuntaje) Tu puntaje fue \(self.puntaje)"), dismissButton:.default(Text("Continuar")){
+                    
+                        self.presentationMode.wrappedValue.dismiss()
+                    
                        })
                    
                    
@@ -277,7 +281,15 @@ struct GameView: View {
         
        
     }
+    
     func BanderaSeleccionada(_ numero: Int)  {
+         
+        if intentos >= intentosMaximos {
+         mostrarPuntuajeMasAlto.toggle()
+         return
+        } else {
+            self.intentos +=  1
+        }
         
         if numero == respuestaCorrecta{
             tituloPuntaje = "Respuesta correcta"
@@ -296,6 +308,7 @@ struct GameView: View {
         
            
         }else{
+           
             withAnimation{
                 self.WrongAnimationAmount += 4
                 if self.points > 0 {
@@ -305,7 +318,7 @@ struct GameView: View {
             }
            
             tituloPuntaje = "Respuesta incorrecta"
-            textoPuntaje = "Has elegido \(paises[numero])"
+            textoPuntaje = "Has elegido \(self.items[numero].name)"
             
         }
         
@@ -314,7 +327,7 @@ struct GameView: View {
     
     func hacerPregunta(){
             self.points = 3
-            self.paises.shuffle()
+            self.items.shuffle()
             self.GoodAnimationAmount = 0
             self.WrongAnimationAmount = 0
             self.TheOthersAnimationAmount = 1.0
@@ -327,6 +340,6 @@ struct GameView: View {
 
 struct GameView_Previews: PreviewProvider {
     static var previews: some View {
-        GameView()
+        GameView(items: [ItemCard(name: "Hidalgo", description: "Prueba", capital: "Pachuca", nombreCompleto: "Demo")], intentosMaximos: 1)
     }
 }

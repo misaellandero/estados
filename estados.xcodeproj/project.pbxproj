@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7F0511932454A6B9000BABED /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0511922454A6B9000BABED /* CardView.swift */; };
 		7F297D242453A6E900119049 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F297D232453A6E800119049 /* AppDelegate.swift */; };
 		7F297D262453A6E900119049 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F297D252453A6E900119049 /* SceneDelegate.swift */; };
 		7F297D292453A6E900119049 /* estados.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7F297D272453A6E900119049 /* estados.xcdatamodeld */; };
@@ -14,9 +15,12 @@
 		7F297D2D2453A6F600119049 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F297D2C2453A6F600119049 /* Assets.xcassets */; };
 		7F297D302453A6F600119049 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F297D2F2453A6F600119049 /* Preview Assets.xcassets */; };
 		7F297D332453A6F600119049 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F297D312453A6F600119049 /* LaunchScreen.storyboard */; };
+		7F297D3B2453A75D00119049 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F297D3A2453A75C00119049 /* GameView.swift */; };
+		7FB98BC4246F520900121063 /* ReferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB98BC3246F520900121063 /* ReferenceView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7F0511922454A6B9000BABED /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		7F297D202453A6E800119049 /* estados.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = estados.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F297D232453A6E800119049 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7F297D252453A6E900119049 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -26,6 +30,9 @@
 		7F297D2F2453A6F600119049 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		7F297D322453A6F600119049 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7F297D342453A6F600119049 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7F297D3A2453A75C00119049 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		7FB4C9FC2470A9A3005195DC /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		7FB98BC3246F520900121063 /* ReferenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferenceView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,9 +65,12 @@
 		7F297D222453A6E800119049 /* estados */ = {
 			isa = PBXGroup;
 			children = (
+				7F297D3A2453A75C00119049 /* GameView.swift */,
+				7FB98BC3246F520900121063 /* ReferenceView.swift */,
 				7F297D232453A6E800119049 /* AppDelegate.swift */,
 				7F297D252453A6E900119049 /* SceneDelegate.swift */,
 				7F297D2A2453A6E900119049 /* ContentView.swift */,
+				7F0511922454A6B9000BABED /* CardView.swift */,
 				7F297D2C2453A6F600119049 /* Assets.xcassets */,
 				7F297D312453A6F600119049 /* LaunchScreen.storyboard */,
 				7F297D342453A6F600119049 /* Info.plist */,
@@ -120,6 +130,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"es-419",
 			);
 			mainGroup = 7F297D172453A6E800119049;
 			productRefGroup = 7F297D212453A6E800119049 /* Products */;
@@ -150,9 +161,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F297D292453A6E900119049 /* estados.xcdatamodeld in Sources */,
+				7FB98BC4246F520900121063 /* ReferenceView.swift in Sources */,
 				7F297D242453A6E900119049 /* AppDelegate.swift in Sources */,
 				7F297D2B2453A6E900119049 /* ContentView.swift in Sources */,
 				7F297D262453A6E900119049 /* SceneDelegate.swift in Sources */,
+				7F0511932454A6B9000BABED /* CardView.swift in Sources */,
+				7F297D3B2453A75D00119049 /* GameView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,6 +177,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				7F297D322453A6F600119049 /* Base */,
+				7FB4C9FC2470A9A3005195DC /* es-419 */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -174,6 +189,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -234,6 +250,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
